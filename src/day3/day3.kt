@@ -7,7 +7,7 @@ private const val DAY3_INPUT_PATH = "src/day3/day3.txt"
 
 fun main(args: Array<String>) {
     println("Day 3 part 1 answer: ${solveDay3Part1()}")
-//    println("Day 3 part 2 answer: ${solveDay3Part2()}")
+    println("Day 3 part 2 answer: ${solveDay3Part2()}")
 }
 
 fun solveDay3Part1(): Int {
@@ -44,25 +44,46 @@ fun solveDay3Part1(): Int {
     return result
 }
 
-//fun solveDay3Part2(): String {
-//    val list = File(DAY3_INPUT_PATH).useLines { it.toList() }
-//    var result = ""
-//    list.forEach { firstString ->
-//        var differentCharCount = 0
-//        list.subList(1, list.size).forEach {secondString ->
-//            var _index = -1
-//            differentCharCount = 0
-//            firstString.forEachIndexed {index, char ->
-//                if (char != secondString[index]) {
-//                    _index = index
-//                    differentCharCount++
-//                }
-//            }
-//            if (differentCharCount == 1) {
-//                result = firstString.substring(0, _index) + firstString.substring(_index + 1, firstString.length)
-//                return result
-//            }
-//        }
-//    }
-//    return result
-//}
+fun solveDay3Part2(): Int {
+    val list = File(DAY3_INPUT_PATH).useLines { it.toList() }
+    val array = Array(1000) {IntArray(1000)}
+    for (i in 0 until 1000) {
+        for (j in 0 until 1000) {
+            array[i][j] = 0
+        }
+    }
+    list.forEach { string ->
+        val p = Pattern.compile("\\d+")
+        val m = p.matcher(string)
+        val extractArray = ArrayList<Int>(5)
+        while (m.find()) {
+            extractArray.add(m.group().toInt())
+        }
+        for (i in extractArray[1] until extractArray[1] + extractArray[3]) {
+            for (j in extractArray[2] until extractArray[2] + extractArray[4]) {
+                array[i][j] += 1
+            }
+        }
+    }
+    var result: Int
+    list.forEach {string ->
+        val p = Pattern.compile("\\d+")
+        val m = p.matcher(string)
+        val extractArray = ArrayList<Int>(5)
+        while (m.find()) {
+            extractArray.add(m.group().toInt())
+        }
+        result = extractArray[0]
+        for (i in extractArray[1] until extractArray[1] + extractArray[3]) {
+            for (j in extractArray[2] until extractArray[2] + extractArray[4]) {
+                if (array[i][j] != 1) {
+                    result = -1
+                }
+            }
+        }
+        if (result != -1) {
+            return result
+        }
+    }
+    return -1
+}
