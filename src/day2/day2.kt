@@ -5,7 +5,7 @@ import java.io.File
 private const val DAY2_INPUT_PATH = "src/day2/day2.txt"
 
 fun main(args: Array<String>) {
-    println("Day 2 part 2 answer: ${solveDay2Part1()}")
+    println("Day 2 part 1 answer: ${solveDay2Part1()}")
     println("Day 2 part 2 answer: ${solveDay2Part2()}")
 }
 
